@@ -1,25 +1,28 @@
 let bubbles;
 
 function setup() {
-    createCanvas(600, 600);
+    createCanvas(1900, 900);
+    frameRate(30)
     bubbles = [];
-    for (let i = 0; i <= 10; i++) {
-        const bubble = new Bubble(300, 300, random(50, 70))
+    for (let i = 0; i <= 160; i++) {
+        const bubble = new Bubble(random(1900), random(900), random(50, 70))
         bubbles.push(bubble)
     }
 }
 
 function draw() {
-    background(240)
+    background(255)
     bubbles.forEach(bubble => {
         bubble.show()
         bubble.move()
+        bubble.putLimit()
     });
+
 }
 
 function mousePressed() {
     bubbles.forEach(bubble => {
-        bubble.clicked(mouseX, mouseY)
+        bubble.changeColor(mouseX, mouseY)
     })
 }
 
@@ -31,27 +34,45 @@ function mouseDragged() {
 
 class Bubble {
     constructor(x, y, r) {
-        this.x = x, this.y = y, this.r = r, this.brightness = 160, this.color1 = random(255), this.color2 = random(255), this.color3 = random(255)
+        this.x = x, this.y = y, this.r = r, this.brightness = 160, this.color1 = random(255), this.color2 = random(255), this.color3 = random(255), this.move_speed = 5
     }
 
     show() {
         fill(this.color1, this.color2, this.color3, this.brightness);
         noStroke()
         circle(this.x, this.y, this.r * 2);
-        this.brightness = 160
+        this.brightness = 200
     }
 
     move() {
-        this.x += random(-5, 5)
-        this.y += random(-5, 5)
+        this.x += random(-this.move_speed, this.move_speed)
+        this.y += random(-this.move_speed, this.move_speed)
     }
 
-    clicked(mx, my) {
+    changeColor(mx, my) {
         let d = dist(mx, my, this.x, this.y)
         if (d <= this.r) {
             this.color1 = random(255);
             this.color2 = random(255);
             this.color3 = random(255);
+        }
+    }
+
+    putLimit() {
+        if (this.x >= 1900) {
+            this.x -= this.move_speed
+        }
+
+        if (this.x <= 0) {
+            this.x += this.move_speed;
+        }
+
+        if (this.y >= 900) {
+            this.y -= this.move_speed
+        }
+
+        if (this.y <= 0) {
+            this.y += this.move_speed
         }
     }
 
