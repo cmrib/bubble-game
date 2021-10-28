@@ -1,11 +1,11 @@
 let bubbles;
 
 function setup() {
-    createCanvas(1900, 900);
+    createCanvas(1900, 840);
     frameRate(30)
     bubbles = [];
-    for (let i = 0; i <= 160; i++) {
-        const bubble = new Bubble(random(1900), random(900), random(50, 70))
+    for (let i = 0; i <= 70; i++) {
+        const bubble = new Bubble(random(width), random(height), random(50, 70))
         bubbles.push(bubble)
     }
 }
@@ -59,7 +59,7 @@ class Bubble {
     }
 
     putLimit() {
-        if (this.x >= 1900) {
+        if (this.x >= width) {
             this.x -= this.move_speed
         }
 
@@ -67,7 +67,7 @@ class Bubble {
             this.x += this.move_speed;
         }
 
-        if (this.y >= 900) {
+        if (this.y >= height) {
             this.y -= this.move_speed
         }
 
